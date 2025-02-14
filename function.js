@@ -13,45 +13,66 @@ export function checkStrenth(password) {
   // checking for the length of the password
   if (password.length >= 8) {
     strength++;
+    console.log("✅ Password length is at least 8 characters");
+  } else {
+    console.log("❌ Password length is too short (less than 8 characters)");
   }
 
   if (password.length >= 12) {
     strength++;
+    console.log("✅ Password length is at least 12 characters");
+  } else {
+    console.log("❌ Password length is short (less than 12 characters)");
   }
 
   // checking for lower case in password.
-  if(/[a-z]/.test(password)) {
+  if (/[a-z]/.test(password)) {
+    console.log("✅ Password contains lowercase letters");
     strength++;
+  } else {
+    console.log("❌ Password does not contain lowercase letters");
   }
 
   // checking for upper case in password.
   if(/[A-Z]/.test(password)) {
+    console.log("✅ Password contains uppercase letters");
     strength++;
-  };
+  } else {
+    console.log("❌ Password does not contain uppercase letters");
+  }
 
   // checking for numbers in password.
   if(/\d/.test(password)) {
+    console.log("✅ Password contains numbers letters");
     strength++;
+  } else {
+    console.log("❌ Password does not contain numbers");
   }
 
   // checking for special characters in password.
   if(/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+    console.log("✅ Password contains special characters");
     strength++;
-  }
-
-  // checking if the password is in the 100 most common passwords
-  if (commonPasswords.has(password)) {
-    strength == 0;
+  } else {
+    console.log("❌ Password does not contain special characters");
   }
 
   return strength;
 }
 
-// this function is used to check if the password contains the name, age
-// or date of birth of the user, which will help determine the strength score
-export function containsDetails(password, name, dob, age) {
-  const details = [name, dob, age.toString()];
-  return details.toString(detail => password.toLowerCase().includes(detail.toLowerCase()));
+// this function is used to check if the password contains the name or age
+// of the user, which will help determine the strength score
+export function containsDetails(password, name, age) {
+  const details = [name, age.toString()];
+  const contains = details.toString(detail => password.toLowerCase().includes(detail.toLowerCase()));
+
+  if (contains) {
+    console.log("❌ Password contains personal details (name or age)");
+  } else {
+    console.log("✅ Password does not contain personal details");
+  }
+
+  return contains;
 }
 
 // This function is used to calculate the time taken for the password to be cracked
@@ -67,29 +88,37 @@ export function crackTime(password) {
   const combinations = Math.pow(complexity, len);
   const sec = combinations/ (1000000000);
 
-  // determining the time taken to crack the password and returning an output statement
+  //calculating the time taken to crack this password using brute force
+  let result;
   if (sec < secInMin) {
-    return `${Math.round(sec)} second/s`;
+    result = `${Math.round(sec)} second/s`;
   } else {
-    const min = sec/ secInMin;
+    const min = sec / secInMin;
     if (min < minInHour) {
-      return `${Math.round(min)} minute/s`
-
+      result = `${Math.round(min)} minute/s`;
     } else {
-      const hour = min/ minInHour;
+      const hour = min / minInHour;
       if (hour < hourInDay) {
-        return `${Math.round(hour)} hour/s`;
-        
+        result = `${Math.round(hour)} hour/s`;
       } else {
-        const days = hour/ hourInDay 
-          return `${Math.round(days)} day/s}`;
+        const days = hour / hourInDay;
+        result = `${Math.round(days)} day/s`;
       }
     }
   }
+
+  console.log(`⏳ Estimated time to crack password using Brute Force: ${result}`);
+  return result;
 }
 
 // This function checks if the password is in the 100 most common passwords
 export function isCommon(password) {
-  return commonPasswords.has(password);
+  if (commonPasswords.has(password)) {
+    console.log("❌ Password is too common");
+    return true;
+  } else {
+    console.log("✅ Password is not in common password list");
+    return false;
+  }
 }
 
