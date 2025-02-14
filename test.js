@@ -1,8 +1,8 @@
 import { calcScore, categScore } from './main.js';
 
-const name = "JohnDoe";  // Example name
-const age = 25;          // Example age
-const password = "JohnDoe3!";  // Example password
+const name = "JohnDoe";
+const age = 25;
+const password = "JohnDoe3!";
 
 console.log("\n🔍 Checking password:", password);
 
