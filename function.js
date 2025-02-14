@@ -5,6 +5,7 @@ import { commonPasswords } from './commpass.js';
 const secInMin = 60;
 const minInHour = 60;
 const hourInDay = 24;
+const dayInYear = 365.25;
 
 // Checks the strength of the password, by returning a strength score
 export function checkStrenth(password) {
@@ -43,7 +44,7 @@ export function checkStrenth(password) {
 
   // checking for numbers in password.
   if(/\d/.test(password)) {
-    console.log("✅ Password contains numbers letters");
+    console.log("✅ Password contains numbers");
     strength++;
   } else {
     console.log("❌ Password does not contain numbers");
@@ -64,7 +65,7 @@ export function checkStrenth(password) {
 // of the user, which will help determine the strength score
 export function containsDetails(password, name, age) {
   const details = [name, age.toString()];
-  const contains = details.toString(detail => password.toLowerCase().includes(detail.toLowerCase()));
+  const contains = details.some(detail => password.toLowerCase().includes(detail.toLowerCase()));
 
   if (contains) {
     console.log("❌ Password contains personal details (name or age)");
@@ -102,7 +103,13 @@ export function crackTime(password) {
         result = `${Math.round(hour)} hour/s`;
       } else {
         const days = hour / hourInDay;
-        result = `${Math.round(days)} day/s`;
+        if (days < dayInYear) {
+          result = `${Math.round(days)} day/s`;
+        }
+        else {
+          const years = days / dayInYear;
+          result = `${Math.round(years)} year/s`;
+        }
       }
     }
   }
