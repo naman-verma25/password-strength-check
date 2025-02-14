@@ -3,41 +3,47 @@ import { commonPasswords } from './commpass.js';
 import { checkStrenth, containsDetails, crackTime, isCommon } from './function.js'
 
 export function calcScore(password, name, age) {
-  const score = checkStrenth(password);
+  let score = checkStrenth(password);
   if (!containsDetails(password, name, age)){
     score++;
+  } else {
+    score -= 2;
   }
 
-  if(crackTime(password).includes("second")) {
+  const timeToCrack = crackTime(password);
+  if (timeToCrack.includes("second/s")) { 
     score += 1;
-  } else if(crackTime(password).includes("minute")) {
+  } else if (timeToCrack.includes("minute/s")) { 
     score += 2;
-  } else if (crackTime(password).includes("hour")) {
+  } else if (timeToCrack.includes("hour/s")) { 
     score += 3;
-  } else {
-    score += 4;
+  } else if (timeToCrack.includes("day/s")) { 
+    score += 4; 
+  } else { 
+    score += 5;
   }
+
 
   if(isCommon(password)) {
-    return 0;
+    score = 0;
   } else {
     score++;
   }
 
+  console.log(categScore(score));
   return score;
 }
 
-export function categScore(password, name, age) {
-  const score = calcScore(password, name, age);
-  if (score >= 0 && score < 5) {
-    return `Your password is VERY WEAK and has a score of ${score}/18`;
-  } else if (score >= 5 && score < 8) {
-    return `Your password is WEAK and has a score of ${score}/18`;
-  } else if (score >= 8 && score < 12) {
-    return `Your password is MODERATE and has a score of ${score}/18`;
-  } else if (score >= 12 && score < 16) {
-    return `Your password is STRONG and has a score of ${score}/18`;
+export function categScore(score) {
+  if (score >= 0 && score < 4) {
+    return `Your password is VERY WEAK and has a score of ${score}/13`;
+  } else if (score >= 4 && score < 7) {
+    return `Your password is WEAK and has a score of ${score}/13`;
+  } else if (score >= 7 && score < 9) {
+    return `Your password is MODERATE and has a score of ${score}/13`;
+  } else if (score >= 9 && score < 11) {
+    return `Your password is STRONG and has a score of ${score}/13`;
   } else {
-    return `Your password is VERY STRONG and has a score of ${score}/18`;
+    return `Your password is VERY STRONG and has a score of ${score}/13`;
   }
 }
