@@ -1,11 +1,19 @@
-# password-strength-check
+PASSWORD STRENGTH CHECKER AND GENERATOR
 
-Feature 1:
-Simple password checker program, which checks for the strength of the password.
+This project evaluates the strength of the users password based on the given industry standard criteria.
+It aims to gamify the process by providing the user with a score out of 13, which they can improve by creating a
+better password. The program also provides the estimated crack time using brute force, so that the user can
+understand how vulnerable their password is.
 
-Feature 2: 
-Advanced Game to learn about basic of password cracking, including brute force and library usage.
-A fake user is presented with information to the player. By analysing the user, the player has to guess
-the password of the user. They can either take 5 guesses by using Brute force or have 3 guesses using 
-a library of 10 passwords. The user can at anypoint chose to use the library, causing their guesses left to be
-n - 2, unless n = 2 or less, causing them to only have 1 guess.
+KEY FEATURES :
+1. Password Strength: The strength of the password is assesed based on multiple factors which are based on 
+industry standards
+
+2. Personalised Suggestions: Based on the users Interest the program generates 5 password which are related
+to their interest, and are stronger, making it easy to remember and safe to use.
+
+TECHNOLOGIES USED :
+- Node.js for the backend functionality.
+- Axios for API requests (Wikipedia API).
+- NLP to extract data for users interest and feeding it to the Wikipedia API.
+
