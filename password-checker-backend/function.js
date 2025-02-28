@@ -14,9 +14,9 @@ export function checkStrenth(password) {
   // checking for the length of the password
   if (password.length >= 8) {
     strength++;
-    console.log("✅ Password length is at least 8 characters");
+    console.log("\n✅ Password length is at least 8 characters");
   } else {
-    console.log("❌ Password length is too short (less than 8 characters)");
+    console.log("\n❌ Password length is too short (less than 8 characters)");
   }
 
   if (password.length >= 12) {
@@ -113,8 +113,6 @@ export function crackTime(password) {
       }
     }
   }
-
-  console.log(`⏳ Estimated time to crack password using Brute Force: ${result}`);
   return result;
 }
 
