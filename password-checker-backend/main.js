@@ -80,7 +80,7 @@ async function getRelated(interest) {
 }
 
 // Function to generate 5 passwords based on Interest through NLP
-async function generatePass(interest, failedCond) {
+async function generatePass(interest) {
   const related = await getRelated(interest);
   let passwords = [];
 
@@ -92,11 +92,9 @@ async function generatePass(interest, failedCond) {
     let num = Math.floor(Math.random() * 100) + 1;
     let special = '!@#$%^&*()_+';
 
-    if (failedCond.includes("details")) {
-      password = word1.charAt(0).toUpperCase() + word1.slice(1) + num + word2.charAt(0).toUpperCase() + word2.slice(1) + special.charAt(Math.floor(Math.random() * special.length));
-    } else {
-      password = word1.charAt(0).toUpperCase() + word1.slice(1) + word2.charAt(0).toUpperCase() + word2.slice(1) + '123';
-    }
+    // creating the password
+    password = word1.charAt(0).toUpperCase() + word1.slice(1) + num + word2.charAt(0).toUpperCase() + word2.slice(1) + special.charAt(Math.floor(Math.random() * special.length));
+    
 
     if (password.length < 12) {
       password += '123';
@@ -130,16 +128,11 @@ async function start() {
 
   const {score, factors, timeToCrack} = calcScore(password, name, age);
 
-  let failedConditions = factors;
-  if (timeToCrack.includes('second/s') || timeToCrack.includes('minute/s')) {
-    failedConditions.push('weak crack time');
-  }
-
   // If the user failed conditions, adjust AI generation
   console.log("\nPassword conditions have been tracked. Generating 5 stronger passwords...");
 
   // Generate 5 recommended passwords
-  const recommendedPasswords = await generatePass(interest, failedConditions);
+  const recommendedPasswords = await generatePass(interest);
 
   console.log("\nHere are 5 recommended passwords based on your interest:");
   recommendedPasswords.forEach((pwd, index) => {
